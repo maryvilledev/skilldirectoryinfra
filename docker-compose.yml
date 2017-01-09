@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  # Cassandra
+  cassandra:
+    image: maryville/skilldirectorycassandra:dev
+    container_name: cassandra_container
+    expose:
+      - "9042"
+    ports:
+      - "9042:9042"
+    restart: always
+
+  # SkillDirectory
+  backend:
+    image: maryville/skilldirectory:dev
+    restart: always
+    # entrypoint:
+    #     - debug
+    container_name: skilldirectory_container
+    environment:
+       CASSANDRA_URL: "cassandra"
+       CASSANDRA_PORT: 9042
+       CASSANDRA_KEYSPACE: "skill_directory_keyspace"
+       CASSANDRA_USERNAME: "cassandra"
+       CASSANDRA_PASSWORD: "cassandra"
+    expose:
+       - "8080"
+    ports:
+       - "8080:8080"
