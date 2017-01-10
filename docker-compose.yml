@@ -28,3 +28,13 @@ services:
        - "8080"
     ports:
        - "8080:8080"
+
+
+  web:
+    image: maryville/skilldirectoryui:dev
+    restart: always
+    container_name: skilldirectory_ui
+    expose:
+      - "3000"
+    ports:
+      - "8000:3000"
