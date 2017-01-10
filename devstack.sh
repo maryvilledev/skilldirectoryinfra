@@ -24,13 +24,18 @@ done
 cassandra_running=$(docker inspect -f {{.State.Running}} cassandra_container)
 skilldirectory_running=$(docker inspect -f {{.State.Running}} skilldirectory_container)
 
+echo $cassandra_running
 ### If cassandra container is running and "--dropdata" flag was used, stop the container
-if $cassandra_running && $drop_data_flag; then
+if $drop_data_flag; then
     echo 'Stopping cassandra_container...'
     docker stop cassandra_container >/dev/null
     echo 'cassandra_container stopped.'
-    docker-compose up -d cassandra
-    sleep 25
+    cassandra_running="false"
+fi
+
+if ! $cassandra_running; then
+  docker-compose up -d cassandra
+  sleep 25
 fi
 
 ### If "--dropdata" flag was used, drop the project's Cassandra keyspace within container
