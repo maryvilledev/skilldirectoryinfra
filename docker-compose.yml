@@ -31,7 +31,7 @@ services:
 
 
   web:
-    image: skillui
+    image: maryville/skilldirectoryui:dev
     restart: always
     container_name: skilldirectory_ui
     expose:
