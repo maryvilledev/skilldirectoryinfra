@@ -15,8 +15,8 @@ services:
   backend:
     image: maryville/skilldirectory:master
     restart: always
-    # entrypoint:
-    #     - debug
+    entrypoint:
+        - debug
     container_name: skilldirectory_container
     environment:
        CASSANDRA_URL: "cassandra"
