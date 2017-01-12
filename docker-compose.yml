@@ -31,7 +31,7 @@ services:
 
 
   web:
-    image: maryville/skilldirectoryui:dev
+    image: maryville/skilldirectoryui:master
     restart: always
     container_name: skilldirectory_ui
     expose:
@@ -39,6 +39,6 @@ services:
     ports:
       - "8000:9000"
     environment:
-      API: "http://ec2-54-91-149-17.compute-1.amazonaws.com:8080"
+      API: "${API}"
     command:
       "/bin/bash ./buildUI"

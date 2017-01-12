@@ -13,6 +13,14 @@ do
     drop_data_flag=true
   elif [[ $arg = "--nodebug" ]]; then
     export DEBUG_FLAG=false
+  elif [[ $arg == "--dev"  ]]; then
+    export API="http://ec2-54-91-149-17.compute-1.amazonaws.com:8080"
+  elif [[ $arg == "stop"  ]]; then
+    docker-compose down --remove-orphans
+    exit 0
+  elif [[ $arg == "pull" ]]; then
+    docker-compose pull
+    exit 0
   else
     echo Unrecognized option: \"$arg\"
     echo Valid options are: \"--dropdata\" and \"--nodebug\"
@@ -24,7 +32,6 @@ done
 cassandra_running=$(docker inspect -f {{.State.Running}} cassandra_container)
 skilldirectory_running=$(docker inspect -f {{.State.Running}} skilldirectory_container)
 
-echo $cassandra_running
 ### If cassandra container is running and "--dropdata" flag was used, stop the container
 if $drop_data_flag; then
     echo 'Stopping cassandra_container...'
@@ -37,6 +44,8 @@ if ! $cassandra_running; then
   docker-compose up -d cassandra
   sleep 25
 fi
+
+echo "API: $API"
 
 ### If "--dropdata" flag was used, drop the project's Cassandra keyspace within container
 if $drop_data_flag; then
