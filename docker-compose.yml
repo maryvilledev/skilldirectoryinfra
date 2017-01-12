@@ -13,7 +13,7 @@ services:
 
   # SkillDirectory
   backend:
-    image: maryville/skilldirectory:dev
+    image: maryville/skilldirectory:master
     restart: always
     # entrypoint:
     #     - debug
