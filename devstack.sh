@@ -16,7 +16,8 @@ do
   elif [[ $arg == "--dev"  ]]; then
     export API="http://ec2-54-91-149-17.compute-1.amazonaws.com:8080"
   elif [[ $arg == "stop"  ]]; then
-    docker-compose down --remove-orphans
+    docker-compose stop web backend
+    docker-compose rm -f web backend
     exit 0
   elif [[ $arg == "pull" ]]; then
     docker-compose pull
