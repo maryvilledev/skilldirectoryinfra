@@ -6,8 +6,14 @@
 ### Pull newest images
 `./devstack pull`
 
-### Stop and remove all containers
+### Only start Cassandra
+`./devstack data`
+
+### Stop and remove skilldirectory and skilldirectoryui containers
 `./devstack stop`
+
+### Stop and remove all containers
+`./devstack kill`
 
 ### Run UI with dev API
 `./devstack --dev`
