@@ -9,6 +9,9 @@
 ### Only start Cassandra
 `./devstack data`
 
+### Pull and restart containers with new images
+`./devstack restart`
+
 ### Stop and remove skilldirectory and skilldirectoryui containers
 `./devstack stop`
 

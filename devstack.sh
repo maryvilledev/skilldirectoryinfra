@@ -30,6 +30,10 @@ do
   elif [[ $arg == "pull" ]]; then
     docker-compose pull
     exit 0
+  elif [[ $arg == "restart" ]]; then
+    docker-compose pull
+    docker-compose up -d --no-deps backend web
+    exit 0
   else
     echo Unrecognized option: \"$arg\"
     echo Valid options are: \"--dropdata\" and \"--nodebug\"
