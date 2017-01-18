@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## CRON JOB ##
+## 0,5,10,15,20,25,30,35,40,45,50,55 * * * * cd /home/ec2-user/sd/skilldirectoryinfra && /home/ec2-user/sd/skilldirectoryinfra/devstack.sh --dev restart ##
+
 ### Default flags and env vars
 export CASSANDRA_USERNAME=cassandra
 export CASSANDRA_PASSWORD=cassandra
