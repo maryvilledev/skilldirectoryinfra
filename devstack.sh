@@ -77,3 +77,4 @@ if $only_data; then
 fi
 
 docker-compose up -d --no-recreate
+docker rmi $(docker images -q --filter "dangling=true")
