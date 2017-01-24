@@ -18,6 +18,17 @@ do
   elif [[ $arg = "--nodebug" ]]; then
     export DEBUG_FLAG=false
   elif [[ $arg == "--dev"  ]]; then
+    if [[ $DATA_USER == "" ]]; then
+      echo "No Data Username"
+      exit 1
+    elif [[ $DATA_PW = "" ]]; then
+      echo "No Data Password"
+      exit 1
+    fi
+    export CASSANDRA_USERNAME=$DATA_USER
+    export CASSANDRA_PASSWORD=$DATA_PW
+    docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
+    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
     export API="http://ec2-54-91-149-17.compute-1.amazonaws.com:8080"
   elif [[ $arg == "stop"  ]]; then
     docker-compose stop web backend
@@ -60,21 +71,26 @@ if ! $cassandra_running; then
   sleep 40
 fi
 
+
 ### If "--dropdata" flag was used, drop the project's Cassandra keyspace within container
 if $drop_data_flag; then
     echo "Dropping and rebuilding [skill_directory_keyspace] keyspace"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "DROP KEYSPACE skill_directory_keyspace"
 fi
 
+
 ### Execute CQL commands in the container from schema file to set up database
 echo "Running skilldirectoryschema..."
 docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
 echo "Schema update complete."
 
+
+
 if $only_data; then
   echo "Exiting after starting cassandra"
   exit 0
 fi
+echo "$CASSANDRA_USERNAME $CASSANDRA_PASSWORD"
 
 docker-compose up -d --no-recreate
 docker rmi $(docker images -q --filter "dangling=true")
