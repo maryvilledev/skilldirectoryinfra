@@ -29,7 +29,7 @@ do
     export CASSANDRA_PASSWORD=$DATA_PW
     docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
-    export API="http://ec2-54-91-149-17.compute-1.amazonaws.com:8080"
+    export API="http://ec2-54-147-37-162.compute-1.amazonaws.com:8080"
   elif [[ $arg == "stop"  ]]; then
     docker-compose stop web backend
     docker-compose rm -f web backend
