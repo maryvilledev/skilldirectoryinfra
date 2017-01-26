@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews (
 );
 
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillicons (
-    id       uuid, // Will contain associated skill's id
+    skill_id uuid, // Will contain associated skill's id
     url      varchar,
     PRIMARY KEY (id)
 );
