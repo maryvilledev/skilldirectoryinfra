@@ -40,6 +40,12 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews (
     PRIMARY KEY (skill_id, id)
 );
 
+CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillicons (
+    skill_id uuid, // Will contain associated skill's id
+    url      varchar,
+    PRIMARY KEY (id)
+);
+
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.skills ( skill_type );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.tmskills ( id );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.links ( id );
