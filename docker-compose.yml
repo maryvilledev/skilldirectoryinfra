@@ -22,6 +22,7 @@ services:
        CASSANDRA_KEYSPACE: "skill_directory_keyspace"
        CASSANDRA_USERNAME: "cassandra"
        CASSANDRA_PASSWORD: "cassandra"
+       FILE_SYSTEM: "S3"
     expose:
        - "8080"
     ports:
