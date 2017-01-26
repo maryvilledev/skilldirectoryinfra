@@ -38,12 +38,12 @@
 			<type label="Bit" quote="" sql="bit" length="0"/>
 		</group>
 	</datatypes><table x="306" y="213" name="skills">
-<row name="id" null="1" autoincrement="1">
+<row name="skill_id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="links" row="skill_id" />
 <relation table="tmskills" row="skill_id" />
 <relation table="skillreviews" row="skill_id" />
-<relation table="skillicons" row="id" />
+<relation table="skillicons" row="skill_id" />
 </row>
 <row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
@@ -52,7 +52,7 @@
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
-<part>id</part>
+<part>skill_id</part>
 </key>
 </table>
 <table x="489" y="332" name="links">
@@ -139,15 +139,15 @@
 <part>team_member_id</part>
 </key>
 </table>
-<table x="477" y="99" name="skillicons">
-<row name="id" null="1" autoincrement="1">
+<table x="477" y="108" name="skillicons">
+<row name="skill_id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="url" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
-<part>id</part>
+<part>skill_id</part>
 </key>
 </table>
 </sql>
