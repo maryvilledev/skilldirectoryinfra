@@ -1,25 +1,28 @@
 # Devstack
+This repo is used to build and run docker images for the [skilldirectory](https://github.com/maryvilledev/skilldirectory) and [skilldirectoryui](https://github.com/maryvilledev/skilldirectoryui) projects on a developer's machine or deployed. A Cassandra database image is also run to support the REST API layer, and the schema for that is located in this repo. Below is a visual of the database schema:
+
+![SkillDirectory Database Schema](https://raw.githubusercontent.com/maryvilledev/skilldirectoryinfra/master/resources/skilldirectoryschema.png)
 
 ### To Run Locally
-`./devstack`
+`./devstack.sh`
 
 ### Pull newest images
-`./devstack pull`
+`./devstack.sh pull`
 
 ### Only start Cassandra
-`./devstack data`
+`./devstack.sh data`
 
 ### Pull and restart containers with new images
-`./devstack restart`
+`./devstack.sh restart`
 
 ### Stop and remove skilldirectory and skilldirectoryui containers
-`./devstack stop`
+`./devstack.sh stop`
 
 ### Stop and remove all containers
-`./devstack kill`
+`./devstack.sh kill`
 
 ### Run UI with dev API
-`./devstack --dev`
+`./devstack.sh --dev`
 
 ### Drop Cassandra data locally
-`./devstack --dropdata`
+`./devstack.sh --dropdata`

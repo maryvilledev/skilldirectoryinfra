@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.tmskills (
 );
 
 // TODO remove this table after api refactor
-CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews (
-    id             uuid,
-    skill_id       varchar,
-    team_member_id varchar,
-    body           varchar,
-    timestamp      timestamp,
-    positive       boolean,
-    PRIMARY KEY (skill_id, id)
-);
+//CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews (
+//    id             uuid,
+//    skill_id       varchar,
+//    team_member_id varchar,
+//    body           varchar,
+//    timestamp      timestamp,
+//    positive       boolean,
+//    PRIMARY KEY (skill_id, id)
+//);
 
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_skill (
     id             uuid,
@@ -51,7 +51,6 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_skill (
     PRIMARY KEY (skill_id, timestamp)
 ) WITH CLUSTERING ORDER BY (timestamp DESC);
 
-
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_year (
 		id             uuid,
 		skill_id       varchar,
@@ -62,6 +61,12 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_year (
 		positive       boolean,
 		PRIMARY KEY (year, timestamp)
 ) WITH CLUSTERING ORDER BY (timestamp DESC);
+
+CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillicons (
+    skill_id uuid, // Will contain associated skill's id
+    url      varchar,
+    PRIMARY KEY (id)
+);
 
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.skills ( skill_type );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.tmskills ( id );

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
+<sql>
+<datatypes db="mysql">
+		<group color="rgb(238,238,170)" label="Numeric">
+			<type label="Integer" quote="" sql="INTEGER" length="0"/>
+			<type label="TINYINT" quote="" sql="TINYINT" length="0"/>
+			<type label="SMALLINT" quote="" sql="SMALLINT" length="0"/>
+			<type label="MEDIUMINT" quote="" sql="MEDIUMINT" length="0"/>
+			<type label="INT" quote="" sql="INT" length="0"/>
+			<type label="BIGINT" quote="" sql="BIGINT" length="0"/>
+			<type label="Decimal" quote="" sql="DECIMAL" length="1" re="DEC"/>
+			<type label="Single precision" quote="" sql="FLOAT" length="0"/>
+			<type label="Double precision" quote="" sql="DOUBLE" length="0" re="DOUBLE"/>
+		</group>
+
+		<group color="rgb(255,200,200)" label="Character">
+			<type label="Char" quote="'" sql="CHAR" length="1"/>
+			<type label="Varchar" quote="'" sql="VARCHAR" length="1"/>
+			<type label="Text" quote="'" sql="MEDIUMTEXT" length="0" re="TEXT"/>
+			<type label="Binary" quote="'" sql="BINARY" length="1"/>
+			<type label="Varbinary" quote="'" sql="VARBINARY" length="1"/>
+			<type label="BLOB" quote="'" sql="BLOB" length="0" re="BLOB"/>
+		</group>
+
+		<group color="rgb(200,255,200)" label="Date &amp; Time">
+			<type label="Date" quote="'" sql="DATE" length="0"/>
+			<type label="Time" quote="'" sql="TIME" length="0"/>
+			<type label="Datetime" quote="'" sql="DATETIME" length="0"/>
+			<type label="Year" quote="" sql="YEAR" length="0"/>
+			<type label="Timestamp" quote="'" sql="TIMESTAMP" length="0"/>
+		</group>
+
+		<group color="rgb(200,200,255)" label="Miscellaneous">
+			<type label="ENUM" quote="" sql="ENUM" length="1"/>
+			<type label="SET" quote="" sql="SET" length="1"/>
+			<type label="Bit" quote="" sql="bit" length="0"/>
+		</group>
+	</datatypes><table x="306" y="213" name="skills">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="links" row="skill_id" />
+<relation table="tmskills" row="skill_id" />
+<relation table="skillreviews" row="skill_id" />
+<relation table="skillicons" row="skill_id" />
+</row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="skill_type" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="489" y="332" name="links">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="url" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="skill_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="link_type" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>skill_id</part>
+<part>id</part>
+</key>
+</table>
+<table x="1005" y="237" name="teammembers">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="tmskills" row="team_member_id" />
+</row>
+<row name="name" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="title" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="814" y="109" name="tmskills">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="skill_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="team_member_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="wish_list" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="proficiency" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+<part>team_member_id</part>
+<part>skill_id</part>
+</key>
+</table>
+<table x="635" y="221" name="skillreviews">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="skill_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="team_member_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="teammembers" row="id" />
+</row>
+<row name="body" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="timestamp" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="positive" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+<part>skill_id</part>
+<part>team_member_id</part>
+</key>
+</table>
+<table x="477" y="108" name="skillicons">
+<row name="skill_id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="url" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>skill_id</part>
+</key>
+</table>
+</sql>
