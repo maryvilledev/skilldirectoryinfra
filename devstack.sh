@@ -8,6 +8,7 @@ export CASSANDRA_USERNAME=cassandra
 export CASSANDRA_PASSWORD=cassandra
 drop_data_flag=false
 export DEBUG_FLAG=true
+export FILE_SYSTEM=""
 only_data=false
 
 ### Parse all command line flags
@@ -27,6 +28,7 @@ do
     fi
     export CASSANDRA_USERNAME=$DATA_USER
     export CASSANDRA_PASSWORD=$DATA_PW
+    export FILE_SYSTEM="S3"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
     export API="http://ec2-54-147-37-162.compute-1.amazonaws.com:8080"
