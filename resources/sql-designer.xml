@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
-<!-- Active URL: http://ondras.zarovi.cz/sql/demo/?keyword=default -->
+<!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
 <sql>
 <datatypes db="mysql">
 		<group color="rgb(238,238,170)" label="Numeric">
@@ -38,7 +38,7 @@
 			<type label="Bit" quote="" sql="bit" length="0"/>
 		</group>
 	</datatypes><table x="306" y="213" name="skills">
-<row name="skill_id" null="1" autoincrement="1">
+<row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="links" row="skill_id" />
 <relation table="tmskills" row="skill_id" />
@@ -52,7 +52,7 @@
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
-<part>skill_id</part>
+<part>id</part>
 </key>
 </table>
 <table x="489" y="332" name="links">
@@ -76,7 +76,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1005" y="214" name="teammembers">
+<table x="1005" y="237" name="teammembers">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="tmskills" row="team_member_id" />
@@ -100,8 +100,7 @@
 <default>NULL</default></row>
 <row name="team_member_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="skillreviews" row="team_member_id" />
-</row>
+<default>NULL</default></row>
 <row name="wish_list" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -123,7 +122,8 @@
 <default>NULL</default></row>
 <row name="team_member_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default></row>
+<default>NULL</default><relation table="teammembers" row="id" />
+</row>
 <row name="body" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
