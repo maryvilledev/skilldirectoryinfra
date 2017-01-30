@@ -10,6 +10,8 @@ drop_data_flag=false
 export DEBUG_FLAG=true
 only_data=false
 
+echo "HOST_NAME: $HOST_NAME"
+
 ### Parse all command line flags
 for arg in "$@"
 do
