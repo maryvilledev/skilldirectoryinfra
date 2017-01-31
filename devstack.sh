@@ -50,9 +50,9 @@ do
     exit 0
   elif [[ $arg == "restart" ]]; then
     docker-compose pull
-    "Running Schema"
+    echo "Running Schema"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
-    "Schema Complete"
+    echo "Schema Complete"
     docker-compose up -d --no-deps backend web
     exit 0
   else
