@@ -51,7 +51,7 @@ do
   elif [[ $arg == "restart" ]]; then
     docker-compose pull
     echo "Running Schema"
-    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
+    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /cassandra/skilldirectoryschema.cql
     echo "Schema Complete"
     docker-compose up -d --no-deps backend web
     exit 0
@@ -88,7 +88,7 @@ fi
 
 ### Execute CQL commands in the container from schema file to set up database
 echo "Running skilldirectoryschema..."
-docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
+docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /cassandra/skilldirectoryschema.cql
 echo "Schema update complete."
 
 
