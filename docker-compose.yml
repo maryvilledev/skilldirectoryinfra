@@ -3,7 +3,7 @@ version: '2'
 services:
   # Cassandra
   cassandra:
-    image: maryville/skilldirectorycassandra:dev
+    image: maryville/skilldirectorycassandra:master
     volumes:
       - ./data/cassandra-1:/var/lib/cassandra:rw
     container_name: cassandra_container
