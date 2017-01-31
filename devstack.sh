@@ -51,6 +51,7 @@ do
   elif [[ $arg == "restart" ]]; then
     docker-compose pull
     docker-compose up -d --no-deps backend web
+    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
     exit 0
   else
     echo Unrecognized option: \"$arg\"
