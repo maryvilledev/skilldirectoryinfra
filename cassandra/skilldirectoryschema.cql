@@ -30,45 +30,45 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.tmskills (
     PRIMARY KEY (team_member_id, id)
 );
 
-// TODO remove this table after api refactor
-//CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews (
-//    id             uuid,
-//    skill_id       varchar,
-//    team_member_id varchar,
-//    body           varchar,
-//    timestamp      timestamp,
-//    positive       boolean,
-//    PRIMARY KEY (skill_id, id)
-//);
+CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_id (
+    id             uuid,
+    skill_id       uuid,
+    team_member_id uuid,
+    body           varchar,
+    timestamp      timestamp,
+    year           timestamp,
+    positive       boolean,
+    PRIMARY KEY (id)
+);
 
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_skill (
     id             uuid,
-    skill_id       varchar,
-    team_member_id varchar,
+    skill_id       uuid,
+    team_member_id uuid,
     body           varchar,
     timestamp      timestamp,
+    year           timestamp,
     positive       boolean,
     PRIMARY KEY (skill_id, timestamp)
 ) WITH CLUSTERING ORDER BY (timestamp DESC);
 
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_year (
-		id             uuid,
-		skill_id       varchar,
-		team_member_id varchar,
-		body           varchar,
-		timestamp      timestamp,
-		year		   int,
-		positive       boolean,
-		PRIMARY KEY (year, timestamp)
+    id             uuid,
+    skill_id       uuid,
+    team_member_id uuid,
+    body           varchar,
+    timestamp      timestamp,
+    year		   timestamp,
+    positive       boolean,
+    PRIMARY KEY (year, timestamp)
 ) WITH CLUSTERING ORDER BY (timestamp DESC);
 
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillicons (
     skill_id uuid, // Will contain associated skill's id
     url      varchar,
-    PRIMARY KEY (id)
+    PRIMARY KEY (skill_id)
 );
 
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.skills ( skill_type );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.tmskills ( id );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.links ( id );
-CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.skillreviews ( id );
