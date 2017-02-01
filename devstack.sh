@@ -43,7 +43,7 @@ do
     sd_new=$(docker images -q maryville/skilldirectory:master)
     if [[ "$ui" != "$ui_new" ]] || [[ "$sd" != "$sd_new" ]]; then
       echo "Image(s) have changed"
-      curl -X POST --data-urlencode 'payload={"channel": "#skilldirectory-bots", "username": "SkillDirectory Bot", "text": "Testing Dev Refresh."}' $SLACK_HOOK
+      curl -X POST --data-urlencode 'payload={"channel": "#skilldirectory-bots", "username": "SkillDirectory Bot", "text": "Skill Directory Environment has been rebuilt."}' $SLACK_HOOK
     fi
   elif [[ $arg == "stop"  ]]; then
     docker-compose stop web backend
