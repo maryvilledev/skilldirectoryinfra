@@ -53,7 +53,7 @@ do
     echo "Running Schema"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
     echo "Schema Complete"
-    docker-compose up -d --no-deps backend web
+    docker-compose up -d --no-deps
     exit 0
   else
     echo Unrecognized option: \"$arg\"
