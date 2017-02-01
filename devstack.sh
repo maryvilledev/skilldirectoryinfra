@@ -34,6 +34,17 @@ do
     docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
     export API="http://$HOST_NAME:8080"
+    echo "Comparing images"
+    echo "Slack Hook $SLACK_HOOK"
+    ui=$(docker images -q maryville/skilldirectoryui:master)
+    sd=$(docker images -q maryville/skilldirectory:master)
+    docker-compose pull
+    ui_new=$(docker images -q maryville/skilldirectoryui:master)
+    sd_new=$(docker images -q maryville/skilldirectory:master)
+    if [[ "$ui" != "$ui_new" ]] || [[ "$sd" != "$sd_new" ]]; then
+      echo "Image(s) have changed"
+      curl -X POST --data-urlencode 'payload={"channel": "#skilldirectory-bots", "username": "SkillDirectory Bot", "text": "Testing Dev Refresh."}' $SLACK_HOOK
+    fi
   elif [[ $arg == "stop"  ]]; then
     docker-compose stop web backend
     docker-compose rm -f web backend
