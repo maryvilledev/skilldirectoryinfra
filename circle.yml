@@ -16,7 +16,7 @@ test:
 
 deployment:
   master:
-    branch: [master, issue10]
+    branch: [master, buildIssue10]
     commands:
       - ls
       - pwd
