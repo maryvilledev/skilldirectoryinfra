@@ -3,7 +3,7 @@ version: '2'
 services:
   # Cassandra
   cassandra:
-    image: maryville/skilldirectorycassandra:dev
+    image: maryville/skilldirectorycassandra:master
     volumes:
       - ./data/cassandra-1:/var/lib/cassandra:rw
     container_name: cassandra_container
@@ -24,7 +24,7 @@ services:
        CASSANDRA_KEYSPACE: "skill_directory_keyspace"
        CASSANDRA_USERNAME: "${CASSANDRA_USERNAME}"
        CASSANDRA_PASSWORD: "${CASSANDRA_PASSWORD}"
-       FILE_SYSTEM: "${API}"
+       FILE_SYSTEM: "${FILE_SYSTEM}"
     expose:
        - "8080"
     ports:

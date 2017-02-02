@@ -8,7 +8,10 @@ export CASSANDRA_USERNAME=cassandra
 export CASSANDRA_PASSWORD=cassandra
 drop_data_flag=false
 export DEBUG_FLAG=true
+export FILE_SYSTEM=""
 only_data=false
+
+echo "HOST_NAME: $HOST_NAME"
 
 ### Parse all command line flags
 for arg in "$@"
@@ -27,9 +30,21 @@ do
     fi
     export CASSANDRA_USERNAME=$DATA_USER
     export CASSANDRA_PASSWORD=$DATA_PW
+    export FILE_SYSTEM="S3"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
-    export API="http://ec2-54-147-37-162.compute-1.amazonaws.com:8080"
+    export API="http://$HOST_NAME:8080"
+    echo "Comparing images"
+    echo "Slack Hook $SLACK_HOOK"
+    ui=$(docker images -q maryville/skilldirectoryui:master)
+    sd=$(docker images -q maryville/skilldirectory:master)
+    docker-compose pull
+    ui_new=$(docker images -q maryville/skilldirectoryui:master)
+    sd_new=$(docker images -q maryville/skilldirectory:master)
+    if [[ "$ui" != "$ui_new" ]] || [[ "$sd" != "$sd_new" ]]; then
+      echo "Image(s) have changed"
+      curl -X POST --data-urlencode 'payload={"channel": "#skilldirectory-bots", "username": "SkillDirectory Bot", "text": "Skill Directory Environment has been rebuilt."}' $SLACK_HOOK
+    fi
   elif [[ $arg == "stop"  ]]; then
     docker-compose stop web backend
     docker-compose rm -f web backend
@@ -46,7 +61,10 @@ do
     exit 0
   elif [[ $arg == "restart" ]]; then
     docker-compose pull
-    docker-compose up -d --no-deps backend web
+    echo "Running Schema"
+    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
+    echo "Schema Complete"
+    docker-compose up -d --no-deps
     exit 0
   else
     echo Unrecognized option: \"$arg\"
