@@ -21,7 +21,7 @@ deployment:
       - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
       - docker build -t $DOCKER_IMAGE:$CIRCLE_TAG --rm=false .
       - docker push $DOCKER_IMAGE:$CIRCLE_TAG
-master:
+  master:
     branch: master
     commands:
       - ls
