@@ -2,6 +2,18 @@
 
 ## CRON JOB ##
 ## 0,5,10,15,20,25,30,35,40,45,50,55 * * * * cd /home/ec2-user/sd/skilldirectoryinfra && /home/ec2-user/sd/skilldirectoryinfra/devstack.sh --dev restart ##
+function help {
+  echo "Usage: $0 [stop|data|kill|pull|restart] [--dropdata] [--nodebug] [--dev]"
+  echo "  with no argument: Starts the devstack."
+  echo "              stop: Stops the devstack."
+  echo "              data: Only starts the database layer."
+  echo "              kill: Stops the devstack and removes the containers."
+  echo "              pull: Pulls the newest images."
+  echo "           restart: Stops and restarts all containers."
+  echo "        --dropdata: Drops the data stored in the database."
+  echo "         --nodebug: Does not print debugging strings to stdin."
+  echo "             --dev: Use when running on development server. Double-checks images and notifies Slack channel."
+}
 
 ### Default flags and env vars
 export CASSANDRA_USERNAME=cassandra
@@ -16,7 +28,10 @@ echo "HOST_NAME: $HOST_NAME"
 ### Parse all command line flags
 for arg in "$@"
 do
-  if [[ $arg = "--dropdata" ]]; then
+  if [[ $arg = "--help" ]]; then
+    help
+    exit 0
+  elif [[ $arg = "--dropdata" ]]; then
     drop_data_flag=true
   elif [[ $arg = "--nodebug" ]]; then
     export DEBUG_FLAG=false
