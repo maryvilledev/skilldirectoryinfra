@@ -30,7 +30,16 @@ services:
     ports:
        - "8080:8080"
 
+  # SkillDirectory Tester
+  backend-tester:
+    image: maryville/skilldirectory-tester:master
+    container_name: skilldirectory_tester
+    environment:
+        API: "http://backend:8080"
+        SLACK_HOOK: "${SLACK_HOOK}"
+        SLACK_TOKEN: "${SLACK_TOKEN}"
 
+  # SkillDirectory UI
   web:
     image: maryville/skilldirectoryui:master
     restart: always
