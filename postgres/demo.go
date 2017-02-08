@@ -50,10 +50,48 @@ type Link struct {
 }
 
 func main() {
+  // Connect to the database, and update the schema
   db, err := gorm.Open("postgres", "host=localhost user=postgres dbname=skilldirectory sslmode=disable password=password")
   if err != nil {
-    fmt.Println(err)
+    fmt.Printf("%v", err)
     return
   }
   db.AutoMigrate(&Skill{}, &TeamMember{}, &Review{}, &Link{})
+
+  // Let's add 2 team members
+  fmt.Println("Adding some team members...")
+  dane := TeamMember{Name: "Dane", Title: "Developer"}
+  joel := TeamMember{Name: "Joel", Title: "Developer"}
+  db.Save(&dane)
+  db.Save(&joel)
+
+  //See if we can't get them back
+  fmt.Println("Querying for team members...")
+  var teamMembers []TeamMember
+  db.Find(&teamMembers)
+  for _, teamMember := range teamMembers {
+    fmt.Printf("Found %s\n", teamMember.Name)
+  }
+
+  //Let's add a skill, with some knowledgeable team members
+  fmt.Println("Adding skill...")
+  golang := Skill{
+    Name: "Golang",
+    Type: "compiled",
+    IconURL: "http://example.com",
+    TeamMembers: []TeamMember{dane, joel},
+  }
+  db.Save(&golang)
+
+  //See if we can't get that back, and preload with the knowledgeable team members
+  fmt.Println("Querying for skills and associated team members...")
+  var skills []Skill
+  db.Preload("TeamMembers").Find(&skills)
+  for _, skill := range skills {
+    fmt.Printf("People who know the %s skill:", skill.Name)
+    for _, member := range skill.TeamMembers {
+      fmt.Printf(" %s", member.Name)
+    }
+    fmt.Println()
+  }
 }
