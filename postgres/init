@@ -21,6 +21,4 @@ $DOCKER run --rm --name postgres_container -p 5432:5432 \
   -e POSTGRES_PASSWORD=password -e POSTGRES_DB=skilldirectory \
   -d postgres && echo "Docker container started."
 $GLIDE i 
-$GO run demo.go
-
 exit
