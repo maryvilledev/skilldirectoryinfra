@@ -34,15 +34,19 @@ type TeamMember struct {
 type Review struct {
   gorm.Model
 
-  SkillId       int `gorm:"index"`
-  TeamMemberId  int `gorm:"index"`
+  Body          string
+  Positive      bool
+
+  Skill         Skill
+  SkillID       uint  `gorm:"index"` //Foreign key for association
+  TeamMember    TeamMember
 }
 
 type Link struct {
   gorm.Model
 
-  Body      string
-  Positive  bool
+  Name      string
+  Type       bool
 
   URL       string
 
@@ -94,4 +98,21 @@ func main() {
     }
     fmt.Println()
   }
+
+  // Let's create a review
+  fmt.Println("Adding a review...")
+  golangReview := Review {
+    Body: "I love it",
+    Positive: true,
+    Skill: golang,
+    TeamMember: dane,
+  }
+  db.Save(&golangReview)
+
+  // Let's try to get back by querying golang reviews,
+  // and write the time it was created
+  fmt.Println("Querying for golang review creation times...")
+  var container Review
+  db.Model(&golang).Related(&Review{}).Select("created_at").First(&container)
+  fmt.Printf("%s\n", &container.CreatedAt)
 }
