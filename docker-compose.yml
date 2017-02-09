@@ -19,7 +19,7 @@ services:
     restart: always
     container_name: skilldirectory_container
     volumes:
-      - /skilldirectory/dev:/skilldirectory/dev:rw
+      - ${HOME}/skilldirectory/dev:/skilldirectory/dev:rw
     environment:
        CASSANDRA_URL: "cassandra"
        CASSANDRA_PORT: 9042
