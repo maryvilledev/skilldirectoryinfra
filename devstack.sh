@@ -130,6 +130,7 @@ fi
 echo "$CASSANDRA_USERNAME $CASSANDRA_PASSWORD"
 
 docker-compose up -d --no-recreate backend web
+echo "Run Tests: $run_tests"
 if [[ $run_tests == true ]]; then
   docker-compose up -d backend-tester
 fi
