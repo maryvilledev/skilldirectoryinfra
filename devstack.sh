@@ -9,6 +9,7 @@ function help {
   echo "              data: Only starts the database layer."
   echo "              kill: Stops the devstack and removes the containers."
   echo "              pull: Pulls the newest images."
+  echo "              test: Runs Postman API tests"
   echo "           restart: Stops and restarts all containers."
   echo "        --dropdata: Drops the data stored in the database."
   echo "         --nodebug: Does not print debugging strings to stdin."
@@ -22,8 +23,7 @@ drop_data_flag=false
 export DEBUG_FLAG=true
 export FILE_SYSTEM=""
 only_data=false
-
-echo "HOST_NAME: $HOST_NAME"
+run_tests=false
 
 ### Parse all command line flags
 for arg in "$@"
@@ -59,6 +59,7 @@ do
     if [[ "$ui" != "$ui_new" ]] || [[ "$sd" != "$sd_new" ]]; then
       echo "Image(s) have changed"
       curl -X POST --data-urlencode 'payload={"channel": "#skilldirectory-bots", "username": "SkillDirectory Bot", "text": "Skill Directory Environment has been rebuilt."}' $SLACK_HOOK
+      run_tests=true
     fi
   elif [[ $arg == "stop"  ]]; then
     docker-compose stop web backend
@@ -80,6 +81,9 @@ do
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
     echo "Schema Complete"
     docker-compose up -d --no-deps
+    exit 0
+  elif [[ $arg == "test" ]]; then
+    docker-compose up -d backend-tester
     exit 0
   else
     echo Unrecognized option: \"$arg\"
@@ -125,5 +129,8 @@ if $only_data; then
 fi
 echo "$CASSANDRA_USERNAME $CASSANDRA_PASSWORD"
 
-docker-compose up -d --no-recreate
+docker-compose up -d --no-recreate backend web
+if [[ $run_tests == true ]]; then
+  docker-compose up -d backend-tester
+fi
 docker rmi $(docker images -q --filter "dangling=true")
