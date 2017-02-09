@@ -76,6 +76,8 @@ do
     docker-compose pull
     exit 0
   elif [[ $arg == "restart" ]]; then
+    echo "Making $HOME/skilldirectory/dev"
+    mkdir -p $HOME/skilldirectory/dev
     docker-compose pull
     echo "Running Schema"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
@@ -132,6 +134,9 @@ if $only_data; then
   exit 0
 fi
 echo "$CASSANDRA_USERNAME $CASSANDRA_PASSWORD"
+
+echo "Making $HOME/skilldirectory/dev"
+mkdir -p $HOME/skilldirectory/dev
 
 docker-compose up -d --no-recreate backend web
 if [[ "$run_tests" == true ]]; then

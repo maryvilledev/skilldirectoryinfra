@@ -4,6 +4,7 @@ services:
   # Cassandra
   cassandra:
     image: maryville/skilldirectorycassandra:master
+    restart: always
     volumes:
       - ./data/cassandra-1:/var/lib/cassandra:rw
     container_name: cassandra_container
@@ -11,13 +12,14 @@ services:
       - "9042"
     ports:
       - "9042:9042"
-    restart: always
 
   # SkillDirectory
   backend:
     image: maryville/skilldirectory:master
     restart: always
     container_name: skilldirectory_container
+    volumes:
+      - ${HOME}/skilldirectory/dev:/root/skilldirectory/dev:rw
     environment:
        CASSANDRA_URL: "cassandra"
        CASSANDRA_PORT: 9042
@@ -27,8 +29,10 @@ services:
        FILE_SYSTEM: "${FILE_SYSTEM}"
     expose:
        - "8080"
+       - "2121"
     ports:
        - "8080:8080"
+       - "2121:2121"
 
   # SkillDirectory Tester
   backend-tester:
