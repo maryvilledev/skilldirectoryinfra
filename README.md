@@ -21,6 +21,9 @@ This repo is used to build and run docker images for the [skilldirectory](https:
 ### Stop and remove all containers
 `./devstack.sh kill`
 
+$$$ Run API tests
+`./devstack.sh test`
+
 ### Run UI with dev API
 `./devstack.sh --dev`
 
