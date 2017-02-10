@@ -30,15 +30,38 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.tmskills (
     PRIMARY KEY (team_member_id, id)
 );
 
-CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews (
+CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_id (
     id             uuid,
-    skill_id       varchar,
-    team_member_id varchar,
+    skill_id       uuid,
+    team_member_id uuid,
     body           varchar,
     timestamp      timestamp,
+    year           timestamp,
     positive       boolean,
-    PRIMARY KEY (skill_id, id)
+    PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_skill (
+    id             uuid,
+    skill_id       uuid,
+    team_member_id uuid,
+    body           varchar,
+    timestamp      timestamp,
+    year           timestamp,
+    positive       boolean,
+    PRIMARY KEY (skill_id, timestamp)
+) WITH CLUSTERING ORDER BY (timestamp DESC);
+
+CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillreviews_by_year (
+    id             uuid,
+    skill_id       uuid,
+    team_member_id uuid,
+    body           varchar,
+    timestamp      timestamp,
+    year		   timestamp,
+    positive       boolean,
+    PRIMARY KEY (year, timestamp)
+) WITH CLUSTERING ORDER BY (timestamp DESC);
 
 CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillicons (
     skill_id uuid, // Will contain associated skill's id
@@ -49,4 +72,3 @@ CREATE TABLE IF NOT EXISTS skill_directory_keyspace.skillicons (
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.skills ( skill_type );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.tmskills ( id );
 CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.links ( id );
-CREATE INDEX IF NOT EXISTS ON skill_directory_keyspace.skillreviews ( id );
