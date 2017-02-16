@@ -48,7 +48,7 @@ do
     export FILE_SYSTEM="S3"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
-    export API="http://$HOST_NAME:8080"
+    export API="$HOST_NAME"
     echo "Comparing images"
     echo "Slack Hook $SLACK_HOOK"
     ui=$(docker images -q maryville/skilldirectoryui:master)
