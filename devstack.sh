@@ -25,9 +25,6 @@ export FILE_SYSTEM=""
 only_data=false
 run_tests=false
 
-### Export Github credentials
-source ./credentials.sh
-
 ### Parse all command line flags
 for arg in "$@"
 do
