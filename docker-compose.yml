@@ -26,6 +26,8 @@ services:
        CASSANDRA_KEYSPACE: "skill_directory_keyspace"
        CASSANDRA_USERNAME: "${CASSANDRA_USERNAME}"
        CASSANDRA_PASSWORD: "${CASSANDRA_PASSWORD}"
+       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}"
+       GITHUB_CLIENT_SECRET: "${GITHUB_CLIENT_SECRET}"
        FILE_SYSTEM: "${FILE_SYSTEM}"
     expose:
        - "8080"
