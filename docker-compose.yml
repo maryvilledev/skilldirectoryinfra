@@ -41,7 +41,7 @@ services:
     image: maryville/skilldirectory-tester:master
     container_name: skilldirectory_tester
     environment:
-        API: "http://backend:8080"
+        API: "http://backend:8080/api"
         SLACK_HOOK: "${SLACK_HOOK}"
         SLACK_TOKEN: "${SLACK_TOKEN}"
 
