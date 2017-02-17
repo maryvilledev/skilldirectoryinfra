@@ -54,5 +54,6 @@ services:
       - "8000:9000"
     environment:
       API: "${API}"
+      CLIENT: "${CLIENT}"
     command:
       "/bin/bash ./buildUI"
