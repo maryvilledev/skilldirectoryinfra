@@ -50,7 +50,7 @@ do
     docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
     export API="$HOST_NAME"
     export CLIENT="$GITHUB_CLIENT"
-    export GITHUB_CLIENT_ID="$GIHUB_CLIENT"
+    export GITHUB_CLIENT_ID="$GITHUB_CLIENT"
     export GITHUB_CLIENT_SECRET="$GITHUB_SECRET"
     echo "Github Client $CLIENT"
     echo "Comparing images"
