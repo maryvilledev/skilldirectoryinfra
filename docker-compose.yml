@@ -16,6 +16,7 @@ services:
        POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
        GITHUB_CLIENT_ID: "${GITHUB_CLIENT_ID}"
        GITHUB_CLIENT_SECRET: "${GITHUB_CLIENT_SECRET}"
+       SSL: "${SSL}"
        FILE_SYSTEM: "${FILE_SYSTEM}"
     expose:
        - "8080"
