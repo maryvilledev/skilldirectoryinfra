@@ -9,7 +9,7 @@ services:
     volumes:
       - ${HOME}/skilldirectory/dev:/root/skilldirectory/dev:rw
     environment:
-       POSTGRES_URL: "{POSTGRES_URL}"
+       POSTGRES_URL: "${POSTGRES_URL}"
        POSTGRES_PORT: 5432
        POSTGRES_KEYSPACE: "${POSTGRES_KEYSPACE}"
        POSTGRES_USERNAME: "${POSTGRES_USERNAME}"
