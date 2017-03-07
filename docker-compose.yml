@@ -1,18 +1,6 @@
 version: '2'
 
 services:
-  # Cassandra
-  cassandra:
-    image: maryville/skilldirectorycassandra:master
-    restart: always
-    volumes:
-      - ./data/cassandra-1:/var/lib/cassandra:rw
-    container_name: cassandra_container
-    expose:
-      - "9042"
-    ports:
-      - "9042:9042"
-
   # SkillDirectory
   backend:
     image: maryville/skilldirectory:master
@@ -21,11 +9,11 @@ services:
     volumes:
       - ${HOME}/skilldirectory/dev:/root/skilldirectory/dev:rw
     environment:
-       CASSANDRA_URL: "cassandra"
-       CASSANDRA_PORT: 9042
-       CASSANDRA_KEYSPACE: "skill_directory_keyspace"
-       CASSANDRA_USERNAME: "${CASSANDRA_USERNAME}"
-       CASSANDRA_PASSWORD: "${CASSANDRA_PASSWORD}"
+       POSTGRES_URL: "{POSTGRES_URL}"
+       POSTGRES_PORT: 5432
+       POSTGRES_KEYSPACE: "${POSTGRES_KEYSPACE}"
+       POSTGRES_USERNAME: "${POSTGRES_USERNAME}"
+       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
        GITHUB_CLIENT_ID: "${GITHUB_CLIENT_ID}"
        GITHUB_CLIENT_SECRET: "${GITHUB_CLIENT_SECRET}"
        FILE_SYSTEM: "${FILE_SYSTEM}"
