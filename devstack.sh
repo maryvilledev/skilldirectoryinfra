@@ -17,12 +17,9 @@ function help {
 }
 
 ### Default flags and env vars
-export CASSANDRA_USERNAME=cassandra
-export CASSANDRA_PASSWORD=cassandra
 drop_data_flag=false
 export DEBUG_FLAG=true
 export FILE_SYSTEM=""
-only_data=false
 run_tests=false
 
 ### Export Github credentials
@@ -46,11 +43,12 @@ do
       echo "No Data Password"
       exit 1
     fi
-    export CASSANDRA_USERNAME=$DATA_USER
-    export CASSANDRA_PASSWORD=$DATA_PW
+    export POSTGRES_USERNAME=$DATA_USER
+    export POSTGRES_PASSWORD=$DATA_PW
+    export POSTGRES_URL=$DATA_URL
+    export POSTGRES_KEYSPACE=$DATA_KEYSPACE
+    export POSTGRES_PORT=$DATA_PORT
     export FILE_SYSTEM="S3"
-    docker exec -it cassandra_container bash usr/bin/cqlsh -u cassandra -p cassandra -e "CREATE USER $DATA_USER WITH PASSWORD '$DATA_PW' SUPERUSER"
-    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "ALTER USER cassandra WITH PASSWORD '10203948596098322048';"
     export API="$HOST_NAME"
     export CLIENT="$GITHUB_CLIENT"
     export GITHUB_CLIENT_ID="$GITHUB_CLIENT"
@@ -87,8 +85,6 @@ do
     mkdir -p $HOME/skilldirectory/dev
     docker-compose pull
     echo "Running Schema"
-    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
-    echo "Schema Complete"
     docker-compose up -d --no-deps backend web
     if [[ "$run_tests" == true ]]; then
       sleep 10
@@ -104,43 +100,6 @@ do
     exit 127 # exit code for option not found
   fi
 done
-
-### See if containers for Cassandra is running
-docker inspect -f {{.State.Running}} cassandra_container &&  cassandra_running="true"  || cassandra_running="false"
-
-### If cassandra container is running and "--dropdata" flag was used, stop the container
-if $drop_data_flag; then
-    echo 'Stopping cassandra_container...'
-    docker stop cassandra_container >/dev/null
-    echo 'cassandra_container stopped.'
-    cassandra_running="false"
-fi
-
-if ! $cassandra_running; then
-  docker-compose up -d cassandra
-  sleep 40
-fi
-
-
-### If "--dropdata" flag was used, drop the project's Cassandra keyspace within container
-if $drop_data_flag; then
-    echo "Dropping and rebuilding [skill_directory_keyspace] keyspace"
-    docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -e "DROP KEYSPACE skill_directory_keyspace"
-fi
-
-
-### Execute CQL commands in the container from schema file to set up database
-echo "Running skilldirectoryschema..."
-docker exec -it cassandra_container bash usr/bin/cqlsh -u $CASSANDRA_USERNAME -p $CASSANDRA_PASSWORD -f /data/skilldirectoryschema.cql
-echo "Schema update complete."
-
-
-
-if $only_data; then
-  echo "Exiting after starting cassandra"
-  exit 0
-fi
-echo "$CASSANDRA_USERNAME $CASSANDRA_PASSWORD"
 
 echo "Making $HOME/skilldirectory/dev"
 mkdir -p $HOME/skilldirectory/dev
