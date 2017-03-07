@@ -24,11 +24,18 @@ type MigrationTool struct {
 
 func NewMigrationTool(p *PostgresConnector, c *CassandraConnector) MigrationTool {
 	p.DB().AutoMigrate(pgmodel.Skill{}, pgmodel.SkillReview{}, pgmodel.Link{}, pgmodel.TeamMember{}, pgmodel.TMSkill{})
-	return MigrationTool{p: p, c: c}
+	mt := MigrationTool{p: p, c: c}
+	if GetProperty("DELETE") == "true" {
+		mt.SetDelete()
+	}
+	return mt
 }
 func (m *MigrationTool) SetDelete() { m.delete = true }
 
 func (m MigrationTool) MoveSkills() {
+	if m.delete {
+		fmt.Println("DELETING")
+	}
 	var skill cassandramodel.Skill
 	queryBytes := []byte{}
 
