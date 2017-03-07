@@ -31,13 +31,13 @@ func NewTMSkillDefaults(id, skillID, teamMemberID uint) TMSkill {
 /*
 NewTMSkillDefaultsSetDefaults returns a new instance of TMSkill
 */
-func NewTMSkillSetDefaults(id, skillID, teamMemberID, profiency uint) TMSkill {
+func NewTMSkillSetDefaults(skillID, teamMemberID, profiency uint, cassID string) TMSkill {
 	tmSkill := TMSkill{
 		SkillID:      skillID,
 		TeamMemberID: teamMemberID,
 		Proficiency:  profiency,
+		CassandraID:  cassID,
 	}
-	tmSkill.ID = id
 	return tmSkill
 }
 
